@@ -14,7 +14,7 @@
     <properties>
         <jackson.version>2.8.5</jackson.version>
         <httpclient.version>4.5.3</httpclient.version>
-        <junit.version>4.12</junit.version>
+        <poi.version>3.8</poi.version>
     </properties>
 
     <dependencies>
@@ -44,6 +44,12 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+        <!--the Java API for Microsoft Documents-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
         </dependency>
     </dependencies>
 
