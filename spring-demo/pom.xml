@@ -12,20 +12,20 @@
     <artifactId>spring-demo</artifactId>
 
     <properties>
-        <common.version>3.6</common.version>
-        <common.io.version>2.5</common.io.version>
+        <org.apache.commons.version>3.6</org.apache.commons.version>
+        <commons.io.version>2.5</commons.io.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>${common.version}</version>
+            <version>${org.apache.commons.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${common.io.version}</version>
+            <version>${commons.io.version}</version>
         </dependency>
     </dependencies>
 
