@@ -12,6 +12,21 @@
     <artifactId>spring-demo</artifactId>
 
     <properties>
+        <common.version>3.6</common.version>
+        <common.io.version>2.5</common.io.version>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${common.io.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

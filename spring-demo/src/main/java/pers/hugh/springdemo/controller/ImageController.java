@@ -1,0 +1,31 @@
+package pers.hugh.springdemo.controller;
+
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+/**
+ * Created by xzding on 2017/10/18.
+ */
+@Controller
+@RequestMapping("/image")
+public class ImageController {
+
+    @ResponseBody
+    @RequestMapping(value = "/case1", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public byte[] case1() throws IOException {
+        URL url = new URL("http://commons.apache.org/images/commons-logo.png");
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        InputStream in = conn.getInputStream();
+        return IOUtils.toByteArray(in);
+    }
+}
