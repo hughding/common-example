@@ -12,11 +12,38 @@
     <artifactId>spring-demo</artifactId>
 
     <properties>
+        <mysql.connector.version>6.0.6</mysql.connector.version>
+        <com.alibaba.druid>1.0.4</com.alibaba.druid>
         <org.apache.commons.version>3.6</org.apache.commons.version>
         <commons.io.version>2.5</commons.io.version>
     </properties>
 
     <dependencies>
+        <!-- Add typical dependencies for a web application -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${com.alibaba.druid}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
@@ -28,5 +55,16 @@
             <version>${commons.io.version}</version>
         </dependency>
     </dependencies>
+
+    <!-- Package as an executable jar -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>
