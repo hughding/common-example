@@ -13,8 +13,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+
 /**
- * Created by xzding on 2017/10/18.
+ * @author xzding
+ * @version 1.0
+ * @since <pre>2017/10/19</pre>
  */
 @Controller
 @RequestMapping("/image")

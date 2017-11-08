@@ -22,17 +22,14 @@ public class ExcelUtil {
      */
     public static Map<Integer,Map<Integer,String>> readExcelContent(String filePath) {
         Map<Integer,Map<Integer,String>> content = new HashMap<Integer,Map<Integer,String>>();
-        XSSFWorkbook workbook = null;
         try {
-            workbook = new XSSFWorkbook(new FileInputStream(filePath));
+            XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(filePath));
             XSSFSheet sheet = workbook.getSheetAt(0);
             // 得到总行数
             int rowNum = sheet.getLastRowNum();
             int colNum = sheet.getRow(0).getPhysicalNumberOfCells();
-            // 正文内容应该从第二行开始,第一行为表头的标题
-            XSSFRow row = null;
             for (int i = 0; i <= rowNum; i++) {
-                row = sheet.getRow(i);
+                XSSFRow row = sheet.getRow(i);
                 for (int j = 0; j < colNum; j++) {
                     if(content.get(i) == null){
                         content.put(i, new HashMap<Integer,String>());

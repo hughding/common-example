@@ -5,8 +5,11 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
+
 /**
- * Created by xzding on 2017/10/18.
+ * @author xzding
+ * @version 1.0
+ * @since <pre>2017/10/19</pre>
  */
 
 @SpringBootApplication(scanBasePackages = {"pers.hugh.springdemo"})

@@ -18,7 +18,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 /**
- * Created by xzding on 2017/8/16.
+ * @author xzding
+ * @version 1.0
+ * @since <pre>2017/10/9</pre>
  */
 public class HttpUtil {
     private static RequestConfig config = null;

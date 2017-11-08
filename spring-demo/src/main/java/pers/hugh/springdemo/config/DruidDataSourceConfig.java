@@ -1,20 +1,34 @@
 package pers.hugh.springdemo.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.bind.RelaxedPropertyResolver;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
+
 /**
- * Created by xzding on 2017/10/19.
+ * @author xzding
+ * @version 1.0
+ * @since <pre>2017/10/19</pre>
  */
 
 @Configuration
 @EnableTransactionManagement
-public class DruidDataSourceConfig {
+public class DruidDataSourceConfig implements EnvironmentAware {
+
+    private RelaxedPropertyResolver propertyResolver;
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.propertyResolver = new RelaxedPropertyResolver(environment, "spring.datasource.");
+    }
 
     @Bean
     public DataSource dataSource() {
@@ -28,14 +42,9 @@ public class DruidDataSourceConfig {
         datasource.setMinIdle(Integer.valueOf(propertyResolver.getProperty("minIdle")));
         datasource.setMaxWait(Long.valueOf(propertyResolver.getProperty("maxWait")));
         datasource.setMaxActive(Integer.valueOf(propertyResolver.getProperty("maxActive")));
-        datasource.setMinEvictableIdleTimeMillis(
-                Long.valueOf(propertyResolver.getProperty("minEvictableIdleTimeMillis")));
-        try {
-            datasource.setFilters("stat,wall");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        datasource.setTimeBetweenEvictionRunsMillis(Long.valueOf(propertyResolver.getProperty("timeBetweenEvictionRunsMillis")));
+        datasource.setMinEvictableIdleTimeMillis(Long.valueOf(propertyResolver.getProperty("minEvictableIdleTimeMillis")));
+
         return datasource;
     }
-
 }
