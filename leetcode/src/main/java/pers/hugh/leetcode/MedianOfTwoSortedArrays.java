@@ -1,4 +1,4 @@
-package pers.hugh.letcode;
+package pers.hugh.leetcode;
 
 /**
  * @author xzding
