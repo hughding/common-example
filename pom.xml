@@ -12,7 +12,7 @@
     <modules>
         <module>common-util</module>
         <module>spring-demo</module>
-        <module>letcode</module>
+        <module>leetcode</module>
     </modules>
 
     <properties>
