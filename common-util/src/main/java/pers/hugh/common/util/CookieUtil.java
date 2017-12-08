@@ -34,7 +34,7 @@ public class CookieUtil {
     }
 
     public static void setCookieValue(String key, String value, int maxAgeSeconds, HttpServletResponse response) {
-        String encodeValue = encode(value, Charsets.UTF_8.name());
+        String encodeValue = encode(value, "UTF-8");
         String cookieValue = (encodeValue == null) ? value : encodeValue;
         Cookie cookie = new Cookie(key, cookieValue);
         cookie.setMaxAge(maxAgeSeconds);

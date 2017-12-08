@@ -37,7 +37,7 @@ public class CookieStoreUtil {
     }
 
     public static void setCookieValue(String key, String value, int maxAgeSeconds, String domain, String path, CookieStore cookieStore) {
-        String encodeValue = encode(value, Charsets.UTF_8.name());
+        String encodeValue = encode(value, "UTF-8");
         String cookieValue = (encodeValue == null) ? value : encodeValue;
         BasicClientCookie cookie = new BasicClientCookie(key, cookieValue);
         cookie.setExpiryDate(new Date(System.currentTimeMillis() + maxAgeSeconds * 1000));
