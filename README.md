@@ -1,2 +1,3 @@
 # common-example 
-# parent pom is spring boot
+* mybatis generator demo
+* spring mvc demo

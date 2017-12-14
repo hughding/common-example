@@ -12,11 +12,13 @@
     <modules>
         <module>common-util</module>
         <module>spring-demo</module>
+        <module>mybatis-generator</module>
     </modules>
 
     <properties>
         <java.version>1.8</java.version>
         <springboot.version>1.5.8.RELEASE</springboot.version>
+        <mybatis.version>3.4.5</mybatis.version>
     </properties>
 
     <dependencyManagement>
@@ -27,6 +29,11 @@
                 <version>${springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
