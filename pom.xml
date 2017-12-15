@@ -12,7 +12,6 @@
     <modules>
         <module>common-util</module>
         <module>spring-demo</module>
-        <module>mybatis-generator</module>
     </modules>
 
     <properties>
