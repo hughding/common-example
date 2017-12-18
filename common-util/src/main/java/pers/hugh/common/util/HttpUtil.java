@@ -104,7 +104,7 @@ public class HttpUtil {
             HttpClientContext httpClientContext = HttpClientContext.create();
             httpClientContext.setCookieStore(cookieStore);
             if (StringUtils.isNotBlank(proxyAddr)) {
-                HttpHost proxy = new HttpHost(proxyAddr, 8080);
+                HttpHost proxy = new HttpHost(proxyAddr, proxyPort);
                 RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
                 httpPost.setConfig(config);
             }
