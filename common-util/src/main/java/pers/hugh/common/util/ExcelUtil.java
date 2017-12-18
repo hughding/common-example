@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by xzding on 2017/8/17.
+ * @author xzding
+ * @version 1.0
+ * @since <pre>2017/10/9</pre>
  */
 public class ExcelUtil {
 
