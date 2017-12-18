@@ -17,65 +17,72 @@ public class ExcelUtil {
 
     /**
      * 读取Excel数据内容
+     *
      * @param filePath excel文件地址
-     * @return Map 包含单元格数据内容的Map对象
+     * @return
      */
-    public static Map<Integer,Map<Integer,String>> readExcelContent(String filePath) {
-        Map<Integer,Map<Integer,String>> content = new HashMap<Integer,Map<Integer,String>>();
+    public static String[][] readExcelContent(String filePath) {
         try {
             XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(filePath));
             XSSFSheet sheet = workbook.getSheetAt(0);
             // 得到总行数
-            int rowNum = sheet.getLastRowNum();
+            int rowNum = sheet.getPhysicalNumberOfRows();
+            //得到总列数
             int colNum = sheet.getRow(0).getPhysicalNumberOfCells();
-            for (int i = 0; i <= rowNum; i++) {
-                XSSFRow row = sheet.getRow(i);
+
+            String[][] content = new String[rowNum][colNum];
+            for (int i = 0; i < rowNum; i++) {
                 for (int j = 0; j < colNum; j++) {
-                    if(content.get(i) == null){
-                        content.put(i, new HashMap<Integer,String>());
-                    }
-                    content.get(i).put(j,getCellFormatValue(row.getCell(j)).trim());
+                    content[i][j] = getCellFormatValue(sheet.getRow(i).getCell(j));
                 }
             }
-        }
-        catch (IOException e) {
+            return content;
+        } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
-
-        return content;
     }
 
     /**
-     * 根据XSSFCell类型设置数据
+     * 获取cell中的值
+     *
      * @param cell
      * @return
      */
     @SuppressWarnings("unchecked")
     private static String getCellFormatValue(XSSFCell cell) {
-        String cellvalue = "";
+        String cellValue = "";
         if (cell != null) {
-            // 判断当前Cell的Type
             switch (cell.getCellType()) {
-                // 如果当前Cell的Type为NUMERIC
+                // 如果当前Cell的Type为“数字”或者“公式”
                 case XSSFCell.CELL_TYPE_NUMERIC:
-                case XSSFCell.CELL_TYPE_FORMULA: {
-                    // 取得当前Cell的数值
-                    cellvalue = String.valueOf(cell.getNumericCellValue());
+                case XSSFCell.CELL_TYPE_FORMULA:
+                    cellValue = String.valueOf(cell.getNumericCellValue());
                     break;
-                }
-                // 如果当前Cell的Type为STRIN
+                // 如果当前Cell的Type为“字符串”
                 case XSSFCell.CELL_TYPE_STRING:
-                    // 取得当前的Cell字符串
-                    cellvalue = cell.getRichStringCellValue().getString();
+                    cellValue = cell.getRichStringCellValue().getString();
+                    break;
+                // 如果当前Cell的Type为“BOOLEAN”
+                case XSSFCell.CELL_TYPE_BOOLEAN:
+                    cellValue = String.valueOf(cell.getBooleanCellValue());
                     break;
                 // 默认的Cell值
                 default:
-                    cellvalue = " ";
+                    cellValue = " ";
             }
-        } else {
-            cellvalue = "";
         }
-        return cellvalue;
+        return cellValue;
+    }
 
+    public static void main(String[] args) {
+        String filePath = ExcelUtil.class.getClassLoader().getResource("sample.xlsx").getPath();
+        String[][] content = readExcelContent(filePath);
+        for (int i = 0; i < content.length; i++) {
+            for (int j = 0; j < content[i].length; j++) {
+                System.out.print(content[i][j] + ",");
+            }
+            System.out.println();
+        }
     }
 }
