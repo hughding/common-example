@@ -6,9 +6,8 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author xzding
@@ -23,10 +22,11 @@ public class ExcelUtil {
      * @param filePath excel文件地址
      * @return
      */
-    public static String[][] readExcelContent(String filePath) {
+    public static String[][] readData(String filePath, String sheetName) {
         try {
+            //创建XSSF,对应 excel.xlsx
             XSSFWorkbook workbook = new XSSFWorkbook(new FileInputStream(filePath));
-            XSSFSheet sheet = workbook.getSheetAt(0);
+            XSSFSheet sheet = workbook.getSheet(sheetName);
             // 得到总行数
             int rowNum = sheet.getPhysicalNumberOfRows();
             //得到总列数
@@ -42,6 +42,33 @@ public class ExcelUtil {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    /**
+     * 向Excel写入内容，若存在文件，则覆盖
+     *
+     * @param filePath excel文件地址
+     * @param sheetName sheet名称
+     * @param content 写入内容
+     * @return
+     */
+    public static boolean writeData(String filePath, String sheetName, String[][] content) {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet(sheetName);
+        for (int i = 0; i < content.length; i++) {
+            XSSFRow row = sheet.createRow(i);
+            for (int j = 0; j < content[i].length; j++) {
+                XSSFCell cell = row.createCell(j);
+                cell.setCellValue(content[i][j]);
+            }
+        }
+        try (FileOutputStream fout = new FileOutputStream(filePath);) {
+            workbook.write(fout);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -78,11 +105,24 @@ public class ExcelUtil {
     }
 
     public static void main(String[] args) {
-        String filePath = ExcelUtil.class.getClassLoader().getResource("sample.xlsx").getPath();
-        String[][] content = readExcelContent(filePath);
-        for (int i = 0; i < content.length; i++) {
-            for (int j = 0; j < content[i].length; j++) {
-                System.out.print(content[i][j] + ",");
+        String filePath = "D:/city.xlsx";
+        String sheetName = "europe";
+
+        //写入
+        String[][] writeContent = new String[][]{
+                {"巴黎","伦敦"},
+                {"Paris","London"},
+                {"1","2"}
+        };
+        boolean result = writeData(filePath,sheetName,writeContent);
+        System.out.println("Write result:" + result);
+
+        //读取
+        String[][] readContent = readData(filePath,sheetName);
+        System.out.println("Read content:");
+        for (int i = 0; i < readContent.length; i++) {
+            for (int j = 0; j < readContent[i].length; j++) {
+                System.out.print(readContent[i][j] + ",");
             }
             System.out.println();
         }
