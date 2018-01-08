@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
- *  AES加密，密文为Base64字符串
+ * AES加密，密文为Base64字符串
  *
  * @author xzding
  * @version 1.0
