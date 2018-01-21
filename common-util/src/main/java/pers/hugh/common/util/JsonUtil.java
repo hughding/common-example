@@ -225,7 +225,7 @@ public class JsonUtil {
         }
     }
 
-    //一下代码为用法示例
+    //以下代码为用法示例
     public static void main(String[] args) {
         System.out.println(writeObjectToJson(null));
         System.out.println(writeObjectToJson(new ArrayList<>()));
