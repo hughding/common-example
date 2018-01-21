@@ -133,7 +133,7 @@ public class JsonUtil {
         /**
          * 如果JSON字符串为null或"null"字符串, 返回null
          * 如果JSON字符串为"[]", 返回空集合
-         * 读取集合如List/Map, 且不是List<String>
+         * 读取集合如List/Map
          *
          * @param jsonString
          * @param clazz
@@ -225,13 +225,19 @@ public class JsonUtil {
         }
     }
 
+    //一下代码为用法示例
     public static void main(String[] args) {
         System.out.println(writeObjectToJson(null));
         System.out.println(writeObjectToJson(new ArrayList<>()));
+        System.out.println(readJsonToObject("[\"abc\",\"def\"]", List.class).size());
+        System.out.println(readJsonToObject("[\"abc\",\"def\"]", new TypeReference<List<String>>(){}).size());
 
         TestBean testBean = new TestBean(123, null, new ArrayList<>());
         System.out.println(writeObjectToJson(testBean));
         System.out.println(readJsonToObject(writeObjectToJson(testBean), TestBean.class).toString());
+        String testBeanList = "[{\"num\":123,\"str\":null,\"list\":[]},{\"num\":123,\"str\":null,\"list\":[\"abc\",\"def\"]}]";
+        System.out.println(readJsonToObject(testBeanList, List.class).get(0).getClass());
+        System.out.println(readJsonToObject(testBeanList, new TypeReference<List<TestBean>>(){}).get(0).getClass());
     }
 
     static class TestBean {
