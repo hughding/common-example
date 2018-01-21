@@ -1,6 +1,5 @@
 package pers.hugh.common.util;
 
-import org.apache.commons.codec.Charsets;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.CookieStore;

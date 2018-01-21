@@ -7,6 +7,11 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+/**
+ * @author xzding
+ * @version 1.0
+ * @since <pre>2018/1/19</pre>
+ */
 public class PinyinUtil {
 
     public static String getPinyin(String str) {
