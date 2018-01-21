@@ -229,8 +229,8 @@ public class JsonUtil {
     public static void main(String[] args) {
         System.out.println(writeObjectToJson(null));
         System.out.println(writeObjectToJson(new ArrayList<>()));
-        System.out.println(readJsonToObject("[\"abc\",\"def\"]", List.class).size());
-        System.out.println(readJsonToObject("[\"abc\",\"def\"]", new TypeReference<List<String>>(){}).size());
+        System.out.println(readJsonToObject("[\"abc\",\"def\"]", List.class).get(0).getClass());
+        System.out.println(readJsonToObject("[\"abc\",\"def\"]", new TypeReference<List<String>>(){}).get(0).getClass());
 
         TestBean testBean = new TestBean(123, null, new ArrayList<>());
         System.out.println(writeObjectToJson(testBean));
