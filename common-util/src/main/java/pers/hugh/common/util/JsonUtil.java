@@ -27,34 +27,34 @@ public class JsonUtil {
         return mapper.toObject(jsonString, type);
     }
 
-    public static String writeObjectToJson(Object object) {
-        return mapper.toJson(object);
-    }
-
     public static Map readJsonToMap(String jsonString) {
         return mapper.toObject(jsonString, Map.class);
+    }
+
+    public static String writeObjectToJson(Object object) {
+        return mapper.toJson(object);
     }
 
     public static String writeMapToJson(Map<String, String> map) {
         return mapper.toJson(map);
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    public static String addJsonKeyValue(String json, String key, String value) {
+    @SuppressWarnings("unchecked")
+    public static String addOrUpdateJsonKeyValue(String json, String key, String value) {
         Map info = readJsonToMap(json);
         info.put(key, value);
         return writeMapToJson(info);
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("unchecked")
     public static String removeJsonKeyValue(String json, String key) {
         Map info = readJsonToMap(json);
         info.remove(key);
         return writeMapToJson(info);
     }
 
+    @SuppressWarnings("unchecked")
     public static String getJsonValueByKey(String json, String key) {
-        @SuppressWarnings("unchecked")
         Map<String, String> info = readJsonToMap(json);
         return info.get(key);
     }
