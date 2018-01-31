@@ -1,6 +1,5 @@
 package pers.hugh.common.util;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpStatus;
@@ -13,14 +12,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -30,33 +28,37 @@ import java.util.List;
  */
 public class HttpUtil {
 
-    private static CookieStore cookieStore = new BasicCookieStore();
-
-    private static final String CONTENT_TYPE = "application/json; charset=utf-8";
-    private static final String ACCEPT = "application/json";
+    private static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
     private static final String CONNECTION = "keep-alive";
-    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:57.0) Gecko/20100101 Firefox/57.0";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36";
 
-    private static void addHeader(HttpRequestBase request){
-        request.addHeader("Content-type", CONTENT_TYPE);
+    private static void addHeader(HttpRequestBase request) {
         request.setHeader("Accept", ACCEPT);
         request.setHeader("Connection", CONNECTION);
         request.setHeader("User-Agent", USER_AGENT);
     }
 
-    public static String doGet(String url, String proxyAddr, int proxyPort) {
+    /**
+     * HTTP GET方法
+     *
+     * @param url
+     * @param proxy       若不使用代理，传null
+     * @param cookieStore 若不使用CookieStore，传null
+     * @return
+     */
+    public static String doGet(String url, HttpProxy proxy, CookieStore cookieStore) {
         String result = null;
         try (CloseableHttpClient httpclient = HttpClients.createDefault();) {
             HttpGet httpGet = new HttpGet(url);
             addHeader(httpGet);
             HttpClientContext httpClientContext = HttpClientContext.create();
             httpClientContext.setCookieStore(cookieStore);
-            if (StringUtils.isNotBlank(proxyAddr)) {
-                HttpHost proxy = new HttpHost(proxyAddr, proxyPort);
-                RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
+            if (proxy != null) {
+                HttpHost httpHost = new HttpHost(proxy.getAddress(), proxy.getPort());
+                RequestConfig config = RequestConfig.custom().setProxy(httpHost).build();
                 httpGet.setConfig(config);
             }
-            try (CloseableHttpResponse response = httpclient.execute(httpGet,httpClientContext)) {
+            try (CloseableHttpResponse response = httpclient.execute(httpGet, httpClientContext)) {
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpStatus.SC_OK) {
                     HttpEntity entity = response.getEntity();
@@ -69,20 +71,30 @@ public class HttpUtil {
         return result;
     }
 
-    public static String doPost(String url, String parameters, String proxyAddr, int proxyPort){
+    /**
+     * HTTP POST方法
+     *
+     * @param url
+     * @param jsonStr     请求JSON字符串
+     * @param proxy       若不使用代理，传null
+     * @param cookieStore 若不使用CookieStore，传null
+     * @return
+     */
+    public static String doPost(String url, String jsonStr, HttpProxy proxy, CookieStore cookieStore) {
         String result = null;
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost(url);
+            httpPost.setHeader("Content-Type", "application/json; charset=utf-8");
             addHeader(httpPost);
-            httpPost.setEntity(new StringEntity(parameters, Charset.forName("UTF-8")));
+            httpPost.setEntity(new StringEntity(jsonStr, StandardCharsets.UTF_8));
             HttpClientContext httpClientContext = HttpClientContext.create();
             httpClientContext.setCookieStore(cookieStore);
-            if (StringUtils.isNotBlank(proxyAddr)) {
-                HttpHost proxy = new HttpHost(proxyAddr, proxyPort);
-                RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
+            if (proxy != null) {
+                HttpHost httpHost = new HttpHost(proxy.getAddress(), proxy.getPort());
+                RequestConfig config = RequestConfig.custom().setProxy(httpHost).build();
                 httpPost.setConfig(config);
             }
-            try (CloseableHttpResponse response = httpclient.execute(httpPost,httpClientContext)) {
+            try (CloseableHttpResponse response = httpclient.execute(httpPost, httpClientContext)) {
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpStatus.SC_OK) {
                     HttpEntity entity = response.getEntity();
@@ -95,20 +107,30 @@ public class HttpUtil {
         return result;
     }
 
-    public static String doPost(String url, List<BasicNameValuePair> parameters, String proxyAddr, int proxyPort){
-        String result = "";
+    /**
+     * HTTP POST方法
+     *
+     * @param url
+     * @param parameters  FORM表单参数
+     * @param proxy       若不使用代理，传null
+     * @param cookieStore 若不使用CookieStore，传null
+     * @return
+     */
+    public static String doPost(String url, List<BasicNameValuePair> parameters, HttpProxy proxy, CookieStore cookieStore) {
+        String result = null;
         try (CloseableHttpClient httpclient = HttpClients.createDefault()) {
             HttpPost httpPost = new HttpPost(url);
+            httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
             addHeader(httpPost);
-            httpPost.setEntity(new UrlEncodedFormEntity(parameters, Charset.forName("UTF-8")));
+            httpPost.setEntity(new UrlEncodedFormEntity(parameters, StandardCharsets.UTF_8));
             HttpClientContext httpClientContext = HttpClientContext.create();
             httpClientContext.setCookieStore(cookieStore);
-            if (StringUtils.isNotBlank(proxyAddr)) {
-                HttpHost proxy = new HttpHost(proxyAddr, proxyPort);
-                RequestConfig config = RequestConfig.custom().setProxy(proxy).build();
+            if (proxy != null) {
+                HttpHost httpHost = new HttpHost(proxy.getAddress(), proxy.getPort());
+                RequestConfig config = RequestConfig.custom().setProxy(httpHost).build();
                 httpPost.setConfig(config);
             }
-            try (CloseableHttpResponse response = httpclient.execute(httpPost,httpClientContext)) {
+            try (CloseableHttpResponse response = httpclient.execute(httpPost, httpClientContext)) {
                 int statusCode = response.getStatusLine().getStatusCode();
                 if (statusCode == HttpStatus.SC_OK) {
                     HttpEntity entity = response.getEntity();
@@ -121,8 +143,33 @@ public class HttpUtil {
         return result;
     }
 
-    public static CookieStore getCookieStore() {
-        return cookieStore;
+    static class HttpProxy {
+        private String address;
+        private int port;
+
+        public HttpProxy() {
+        }
+
+        public HttpProxy(String address, int port) {
+            this.address = address;
+            this.port = port;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public int getPort() {
+            return port;
+        }
+
+        public void setPort(int port) {
+            this.port = port;
+        }
     }
 
 }
