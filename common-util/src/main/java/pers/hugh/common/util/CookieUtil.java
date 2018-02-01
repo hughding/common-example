@@ -2,6 +2,8 @@ package pers.hugh.common.util;
 
 import org.apache.commons.codec.Charsets;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,8 @@ import java.net.URLEncoder;
  * @since <pre>2017/11/9</pre>
  */
 public class CookieUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(CookieUtil.class);
 
     public static String getCookieValue(String key, HttpServletRequest request) {
         String value = null;
@@ -48,8 +52,8 @@ public class CookieUtil {
         }
         try {
             return URLEncoder.encode(str, charset);
-        } catch (UnsupportedEncodingException e) {
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
+            logger.error("encode error", e);
         }
         return null;
     }

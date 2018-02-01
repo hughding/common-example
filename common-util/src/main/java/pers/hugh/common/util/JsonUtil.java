@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.Map;
  * @since <pre>2017/10/9</pre>
  */
 public class JsonUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
 
     public static JacksonMapper mapper = JacksonMapper.buildNormalMapper();
 
@@ -148,6 +152,7 @@ public class JsonUtil {
                 T t = mapper.readValue(jsonString, clazz);
                 return t;
             } catch (IOException e) {
+                logger.error("toObject error", e);
                 return null;
             }
         }
@@ -174,6 +179,7 @@ public class JsonUtil {
                 T t = (T) mapper.readValue(jsonString, type);
                 return t;
             } catch (IOException e) {
+                logger.error("toObject error", e);
                 return null;
             }
         }
@@ -186,6 +192,7 @@ public class JsonUtil {
             try {
                 return mapper.writeValueAsString(object);
             } catch (IOException e) {
+                logger.error("toJson error", e);
                 return null;
             }
         }
@@ -198,6 +205,7 @@ public class JsonUtil {
             try {
                 return (T) mapper.readerForUpdating(object).readValue(jsonString);
             } catch (IOException e) {
+                logger.error("update error", e);
                 return null;
             }
         }
@@ -230,14 +238,16 @@ public class JsonUtil {
         System.out.println(writeObjectToJson(null));
         System.out.println(writeObjectToJson(new ArrayList<>()));
         System.out.println(readJsonToObject("[\"abc\",\"def\"]", List.class).get(0).getClass());
-        System.out.println(readJsonToObject("[\"abc\",\"def\"]", new TypeReference<List<String>>(){}).get(0).getClass());
+        System.out.println(readJsonToObject("[\"abc\",\"def\"]", new TypeReference<List<String>>() {
+        }).get(0).getClass());
 
         TestBean testBean = new TestBean(123, null, new ArrayList<>());
         System.out.println(writeObjectToJson(testBean));
         System.out.println(readJsonToObject(writeObjectToJson(testBean), TestBean.class).toString());
         String testBeanList = "[{\"num\":123,\"str\":null,\"list\":[]},{\"num\":123,\"str\":null,\"list\":[\"abc\",\"def\"]}]";
         System.out.println(readJsonToObject(testBeanList, List.class).get(0).getClass());
-        System.out.println(readJsonToObject(testBeanList, new TypeReference<List<TestBean>>(){}).get(0).getClass());
+        System.out.println(readJsonToObject(testBeanList, new TypeReference<List<TestBean>>() {
+        }).get(0).getClass());
     }
 
     static class TestBean {

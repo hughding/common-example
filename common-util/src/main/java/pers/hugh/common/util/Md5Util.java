@@ -1,6 +1,9 @@
 package pers.hugh.common.util;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.security.MessageDigest;
 
 /**
@@ -9,6 +12,8 @@ import java.security.MessageDigest;
  * @since <pre>2017/11/9</pre>
  */
 public class Md5Util {
+
+    private static final Logger logger = LoggerFactory.getLogger(Md5Util.class);
 
     /**
      * 生成MD5
@@ -27,6 +32,7 @@ public class Md5Util {
             // 转换为16进制字符串
             md5 = bytesToHex(md5Byte);
         } catch (Exception e) {
+            logger.error("getMd5 error", e);
             e.printStackTrace();
         }
         return md5;

@@ -1,5 +1,7 @@
 package pers.hugh.springdemo.config.properties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 
 /**
@@ -8,6 +10,8 @@ import org.springframework.core.env.Environment;
  * @since <pre>2018/1/31</pre>
  */
 public abstract class AbstractProperties {
+
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     public AbstractProperties() {
     }
@@ -35,7 +39,7 @@ public abstract class AbstractProperties {
         try {
             formatValue = Integer.parseInt(value);
         } catch (Exception e) {
-//            ClogUtil.error(String.format("%s=%s config error.",key, value), e);
+            logger.error("{}={} config error.", new Object[]{key, value});
         }
         return formatValue;
     }
@@ -49,7 +53,7 @@ public abstract class AbstractProperties {
         try {
             formatValue = Long.parseLong(value);
         } catch (Exception e) {
-//            ClogUtil.error(String.format("%s=%s config error.",key, value), e);
+            logger.error("{}={} config error.", new Object[]{key, value});
         }
         return formatValue;
     }
@@ -63,7 +67,7 @@ public abstract class AbstractProperties {
         try {
             formatValue = Double.parseDouble(value);
         } catch (Exception e) {
-//            ClogUtil.error(String.format("%s=%s config error.",key, value), e);
+            logger.error("{}={} config error.", new Object[]{key, value});
         }
         return formatValue;
     }
@@ -77,7 +81,7 @@ public abstract class AbstractProperties {
         try {
             formatValue = Boolean.parseBoolean(value);
         } catch (Exception e) {
-//            ClogUtil.error(String.format("%s=%s config error.",key, value), e);
+            logger.error("{}={} config error.", new Object[]{key, value});
         }
         return formatValue;
     }

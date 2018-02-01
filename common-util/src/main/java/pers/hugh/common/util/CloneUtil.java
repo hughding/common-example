@@ -1,5 +1,8 @@
 package pers.hugh.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 
 /**
@@ -8,6 +11,8 @@ import java.io.*;
  * @since <pre>2017/10/9</pre>
  */
 public class CloneUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(CloneUtil.class);
 
     public static Object cloneObj(Serializable obj) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(512);
@@ -19,24 +24,25 @@ public class CloneUtil {
             bais = new ByteArrayInputStream(baos.toByteArray());
             ObjectInputStream in = new ObjectInputStream(bais);
             return in.readObject();
-        } catch (ClassNotFoundException ex) {
-            return null;
-        } catch (IOException ex) {
+        } catch (Exception e) {
+            logger.error("ObjectInputStream readObject error", e);
             return null;
         } finally {
             try {
                 if (bais != null) {
                     bais.close();
                 }
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 // ignore
+                logger.error("ByteArrayInputStream close error", e);
             }
             try {
                 if (baos != null) {
                     baos.close();
                 }
-            } catch (IOException ex) {
+            } catch (IOException e) {
                 // ignore
+                logger.error("ByteArrayOutputStream close error", e);
             }
         }
     }

@@ -16,6 +16,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -27,6 +29,8 @@ import java.util.List;
  * @since <pre>2017/10/9</pre>
  */
 public class HttpUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(HttpUtil.class);
 
     private static final String ACCEPT = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8";
     private static final String CONNECTION = "keep-alive";
@@ -66,7 +70,7 @@ public class HttpUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("doGet error", e);
         }
         return result;
     }
@@ -102,7 +106,7 @@ public class HttpUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("doPost error", e);
         }
         return result;
     }
@@ -138,7 +142,7 @@ public class HttpUtil {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("doPost error", e);
         }
         return result;
     }

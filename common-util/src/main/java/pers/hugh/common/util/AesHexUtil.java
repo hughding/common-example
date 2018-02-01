@@ -1,5 +1,8 @@
 package pers.hugh.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
@@ -16,6 +19,9 @@ import java.security.SecureRandom;
  * @since <pre>2018/1/8</pre>
  */
 public class AesHexUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(AesHexUtil.class);
+
     private static final String KEY_ALGORITHM = "AES";
     /**
      * 默认的加密算法
@@ -44,7 +50,8 @@ public class AesHexUtil {
 
             //十六进制转码返回
             return parseByte2HexStr(result);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            logger.error("encrypt exception", e);
             return null;
         }
     }
@@ -69,7 +76,8 @@ public class AesHexUtil {
             byte[] result = cipher.doFinal(parseHexStr2Byte(content));
 
             return new String(result, "utf-8");
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            logger.error("decrypt exception", e);
             return null;
         }
     }
@@ -92,7 +100,8 @@ public class AesHexUtil {
 
             // 转换为AES专用密钥
             return new SecretKeySpec(secretKey.getEncoded(), KEY_ALGORITHM);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("getSecretKey exception", e);
             return null;
         }
     }

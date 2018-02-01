@@ -1,5 +1,7 @@
 package pers.hugh.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
@@ -19,6 +21,8 @@ import java.security.SecureRandom;
  * @since <pre>2018/1/8</pre>
  */
 public class AesBase64Util {
+
+    private static final Logger logger = LoggerFactory.getLogger(AesBase64Util.class);
 
     private static final String KEY_ALGORITHM = "AES";
     /**
@@ -51,7 +55,8 @@ public class AesBase64Util {
 
             //返回Base64转码后的加密数据
             return BASE_64_ENCODER.encode(result);
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            logger.error("encrypt exception", e);
             return null;
         }
     }
@@ -76,7 +81,8 @@ public class AesBase64Util {
             byte[] result = cipher.doFinal(BASE_64_DECODER.decodeBuffer(content));
 
             return new String(result, "utf-8");
-        } catch (Exception ex) {
+        } catch (Exception e) {
+            logger.error("decrypt exception", e);
             return null;
         }
     }
@@ -99,7 +105,8 @@ public class AesBase64Util {
 
             // 转换为AES专用密钥
             return new SecretKeySpec(secretKey.getEncoded(), KEY_ALGORITHM);
-        } catch (NoSuchAlgorithmException ex) {
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("getSecretKey exception", e);
             return null;
         }
     }

@@ -35,7 +35,6 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis-starter}</version>
         </dependency>
-
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -45,6 +44,10 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>${com.alibaba.druid}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
 
         <dependency>

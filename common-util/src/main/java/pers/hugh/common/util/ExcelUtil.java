@@ -4,6 +4,8 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,6 +17,8 @@ import java.io.IOException;
  * @since <pre>2017/10/9</pre>
  */
 public class ExcelUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
     /**
      * 读取Excel数据内容
@@ -40,7 +44,7 @@ public class ExcelUtil {
             }
             return content;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("readData error", e);
             return null;
         }
     }
@@ -48,9 +52,9 @@ public class ExcelUtil {
     /**
      * 向Excel写入内容，若存在文件，则覆盖
      *
-     * @param filePath excel文件地址
+     * @param filePath  excel文件地址
      * @param sheetName sheet名称
-     * @param content 写入内容
+     * @param content   写入内容
      * @return
      */
     public static boolean writeData(String filePath, String sheetName, String[][] content) {
@@ -67,7 +71,7 @@ public class ExcelUtil {
             workbook.write(fout);
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("writeData error", e);
             return false;
         }
     }
@@ -110,15 +114,15 @@ public class ExcelUtil {
 
         //写入
         String[][] writeContent = new String[][]{
-                {"巴黎","伦敦"},
-                {"Paris","London"},
-                {"1","2"}
+                {"巴黎", "伦敦"},
+                {"Paris", "London"},
+                {"1", "2"}
         };
-        boolean result = writeData(filePath,sheetName,writeContent);
+        boolean result = writeData(filePath, sheetName, writeContent);
         System.out.println("Write result:" + result);
 
         //读取
-        String[][] readContent = readData(filePath,sheetName);
+        String[][] readContent = readData(filePath, sheetName);
         System.out.println("Read content:");
         for (int i = 0; i < readContent.length; i++) {
             for (int j = 0; j < readContent[i].length; j++) {

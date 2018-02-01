@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.CookieStore;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -18,6 +20,8 @@ import java.util.List;
  */
 public class CookieStoreUtil {
 
+    private static final Logger logger = LoggerFactory.getLogger(CookieStoreUtil.class);
+
     public static String getCookieValue(String key, String domain, CookieStore cookieStore) {
         String value = null;
         if (StringUtils.isBlank(key)) {
@@ -28,7 +32,7 @@ public class CookieStoreUtil {
             return value;
         }
         for (Cookie cookie : cookies) {
-            if (StringUtils.equals(cookie.getName(), key) && StringUtils.equals(cookie.getDomain(),domain)) {
+            if (StringUtils.equals(cookie.getName(), key) && StringUtils.equals(cookie.getDomain(), domain)) {
                 value = cookie.getValue();
             }
         }
@@ -51,8 +55,8 @@ public class CookieStoreUtil {
         }
         try {
             return URLEncoder.encode(str, charset);
-        } catch (UnsupportedEncodingException e) {
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
+            logger.error("encode error", e);
         }
         return null;
     }
