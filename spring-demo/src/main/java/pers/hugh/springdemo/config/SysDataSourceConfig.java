@@ -23,13 +23,14 @@ import javax.sql.DataSource;
 @MapperScan(basePackages = "pers.hugh.springdemo.dal.sys", sqlSessionFactoryRef = "sysSqlSessionFactoryBean")
 @EnableTransactionManagement
 @Configuration
-public class SysDataSourceConfig{
+public class SysDataSourceConfig {
 
     @Autowired
     private JdbcSysProperties jdbcSysProperties;
 
 
     @Bean
+    @Primary
     public DataSource sysDataSource() {
         DruidDataSource datasource = new DruidDataSource();
         datasource.setUrl(jdbcSysProperties.getUrl());
