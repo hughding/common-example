@@ -28,7 +28,12 @@ public class SysDataSourceConfig {
     @Autowired
     private JdbcSysProperties jdbcSysProperties;
 
-
+    /**
+     * spring.datasource.schema配置会指定一个sql脚本，Spring boot会选一个datasource执行，需要默认一个主datasource,所以使用@Primary注解
+     * spring.datasource.schema没有配置时，什么都不执行
+     *
+     * @return
+     */
     @Bean
     @Primary
     public DataSource sysDataSource() {
