@@ -4,6 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <mappers>
-        <mapper resource="pers/hugh/springdemo/dal/sys/dao/SysConfigDao.xml"/>
+        <mapper resource="pers/hugh/springdemo/dal/sys/mapper/SysConfigDao.xml"/>
     </mappers>
 </configuration>

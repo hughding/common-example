@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <mappers>
-        <mapper resource="pers/hugh/springdemo/dal/world/dao/CityDao.xml"/>
-        <mapper resource="pers/hugh/springdemo/dal/world/dao/CountryDao.xml"/>
+        <mapper resource="pers/hugh/springdemo/dal/world/mapper/CityDao.xml"/>
+        <mapper resource="pers/hugh/springdemo/dal/world/mapper/CountryDao.xml"/>
     </mappers>
 </configuration>

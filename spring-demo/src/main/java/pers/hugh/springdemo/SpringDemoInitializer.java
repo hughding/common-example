@@ -1,9 +1,12 @@
 package pers.hugh.springdemo;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
 /**
@@ -13,7 +16,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
  */
 
 @SpringBootApplication(scanBasePackages = {"pers.hugh.springdemo"})
-@ServletComponentScan
 public class SpringDemoInitializer extends SpringBootServletInitializer {
 
     @Override

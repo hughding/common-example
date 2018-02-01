@@ -22,8 +22,8 @@ import javax.sql.DataSource;
  * @since <pre>2017/10/19</pre>
  */
 @MapperScan(basePackages = "pers.hugh.springdemo.dal.world", sqlSessionFactoryRef = "worldSqlSessionFactoryBean")
-@Configuration
 @EnableTransactionManagement
+@Configuration
 public class WorldDataSourceConfig {
 
     @Autowired
