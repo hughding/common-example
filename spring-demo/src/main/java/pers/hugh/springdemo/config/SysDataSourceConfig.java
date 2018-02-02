@@ -16,6 +16,8 @@ import pers.hugh.springdemo.config.properties.JdbcSysProperties;
 import javax.sql.DataSource;
 
 /**
+ * 由于不是所有datasource都集成了Spring boot，所以此处提供了传统的数据源配置方式
+ *
  * @author xzding
  * @version 1.0
  * @since <pre>2017/10/19</pre>
