@@ -1,4 +1,4 @@
-package pers.hugh.springdemo.consts;
+package pers.hugh.springdemo.constant;
 
 /**
  * @author xzding

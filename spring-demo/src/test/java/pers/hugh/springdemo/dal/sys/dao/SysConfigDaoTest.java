@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import pers.hugh.springdemo.CommonTest;
-import pers.hugh.springdemo.consts.TransactionManagerName;
-
-import static org.junit.Assert.*;
+import pers.hugh.springdemo.constant.TransactionManagerName;
 
 /**
  * @author xzding
