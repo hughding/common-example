@@ -10,6 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @since <pre>2018/2/2</pre>
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = SpringDemoInitializer.class)
 public class CommonTest {
 }

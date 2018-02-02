@@ -6,6 +6,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import pers.hugh.springdemo.CommonTest;
 import pers.hugh.springdemo.constant.TransactionManagerName;
+import pers.hugh.springdemo.dal.sys.entity.SysConfig;
+
+import static org.junit.Assert.*;
 
 /**
  * @author xzding
@@ -37,6 +40,11 @@ public class SysConfigDaoTest extends CommonTest {
 
     @Test
     public void insertSelective() {
+        SysConfig sysConfig = new SysConfig();
+        sysConfig.setVariable("test");
+        sysConfig.setValue("test");
+        int row = sysConfigDao.insertSelective(sysConfig);
+        assertEquals(1,row);
     }
 
     @Test
@@ -65,5 +73,7 @@ public class SysConfigDaoTest extends CommonTest {
 
     @Test
     public void updateByPrimaryKey() {
+        SysConfig sysConfig = sysConfigDao.selectByPrimaryKey("diagnostics.allow_i_s_tables");
+        assertNotNull(sysConfig);
     }
 }
