@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import pers.hugh.springdemo.CommonTest;
-import pers.hugh.springdemo.constant.TransactionManagerName;
+import pers.hugh.springdemo.constant.TransactionManagerConsts;
 import pers.hugh.springdemo.dal.sys.entity.SysConfig;
 
 import static org.junit.Assert.*;
@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
  * @version 1.0
  * @since <pre>2018/2/2</pre>
  */
-@Transactional(TransactionManagerName.SYS_TRANSACTION_MANAGER)
+@Transactional(TransactionManagerConsts.SYS_TRANSACTION_MANAGER)
 @Rollback
 public class SysConfigDaoTest extends CommonTest {
 
