@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,7 +25,7 @@ import java.net.URL;
 public class ImageController {
 
     @ResponseBody
-    @RequestMapping(value = "/case1", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    @GetMapping(path = "/case1", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] case1() throws IOException {
         URL url = new URL("http://commons.apache.org/images/commons-logo.png");
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
