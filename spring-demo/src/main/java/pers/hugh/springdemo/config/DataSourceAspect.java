@@ -24,15 +24,15 @@ public class DataSourceAspect {
     private Logger logger = LoggerFactory.getLogger(DynamicDataSource.class);
 
     @Before("execution(* pers.hugh.springdemo.dal.sys.dao..*.*(..))")
-    public void setReadDataSource(JoinPoint jp) {
+    public void chooseDataSource(JoinPoint jp) {
         String method = jp.getSignature().getName();
         boolean isReadMethod = Arrays.stream(READ_PREFIX)
                 .filter(readPrefix -> StringUtils.startsWith(method, readPrefix)).count() > 0;
         if (isReadMethod) {
-            logger.info("dataSource切换到：read");
+            logger.info("dataSource:switch to read");
             DynamicDataSource.read();
         } else {
-            logger.info("dataSource切换到：write");
+            logger.info("dataSource:switch to write");
             DynamicDataSource.write();
         }
     }
