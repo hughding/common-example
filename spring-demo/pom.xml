@@ -13,9 +13,10 @@
     <packaging>war</packaging>
 
     <properties>
-        <mybatis-starter>1.3.1</mybatis-starter>
+        <mybatis-starter.version>1.3.1</mybatis-starter.version>
         <mysql.connector.version>5.1.26</mysql.connector.version>
-        <com.alibaba.druid>1.0.4</com.alibaba.druid>
+        <druid.version>1.0.4</druid.version>
+        <druid-starter.version>1.1.8</druid-starter.version>
         <org.apache.commons.version>3.6</org.apache.commons.version>
         <commons.io.version>2.5</commons.io.version>
     </properties>
@@ -40,7 +41,7 @@
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-starter}</version>
+            <version>${mybatis-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>
@@ -50,7 +51,12 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${com.alibaba.druid}</version>
+            <version>${druid.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>${druid-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
