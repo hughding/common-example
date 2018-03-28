@@ -12,6 +12,7 @@
     <modules>
         <module>common-util</module>
         <module>spring-demo</module>
+        <module>dozer-demo</module>
     </modules>
 
     <properties>

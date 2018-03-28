@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozermapper.github.io/schema/bean-mapping"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping http://dozermapper.github.io/schema/bean-mapping.xsd">
+    <configuration>
+        <stop-on-errors>true</stop-on-errors>
+        <date-format>yyyy-MM-dd HH:mm:ss</date-format>
+        <wildcard>true</wildcard>
+    </configuration>
+
+    <mapping>
+        <class-a>pers.hugh.dozerdemo.entity.Source</class-a>
+        <class-b>pers.hugh.dozerdemo.entity.Target</class-b>
+        <field>
+            <a>b</a>
+            <b>b2</b>
+        </field>
+    </mapping>
+
+    <mapping>
+        <class-a>pers.hugh.dozerdemo.entity.SourceSub</class-a>
+        <class-b>pers.hugh.dozerdemo.entity.TargetSub</class-b>
+
+        <field custom-converter="pers.hugh.dozerdemo.converter.SourceSubConverter">
+            <a>subB</a>
+            <b>subB</b>
+        </field>
+    </mapping>
+</mappings>
