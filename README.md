@@ -1,3 +1,3 @@
 # common-example 
-* mybatis generator demo
+* dozer demo
 * spring mvc demo
