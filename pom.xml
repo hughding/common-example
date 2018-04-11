@@ -13,6 +13,7 @@
         <module>common-util</module>
         <module>spring-demo</module>
         <module>dozer-demo</module>
+        <module>storm-demo</module>
     </modules>
 
     <properties>
@@ -20,10 +21,28 @@
         <springboot.version>1.5.8.RELEASE</springboot.version>
         <mybatis.version>3.4.5</mybatis.version>
         <logback.version>1.2.3</logback.version>
+        <lombok.version>1.16.20</lombok.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--===============modules===============-->
+            <dependency>
+                <groupId>pers.hugh</groupId>
+                <artifactId>common-util</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pers.hugh</groupId>
+                <artifactId>spring-demo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>pers.hugh</groupId>
+                <artifactId>storm-demo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -40,6 +59,12 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
