@@ -21,6 +21,7 @@
         <springboot.version>1.5.8.RELEASE</springboot.version>
         <mybatis.version>3.4.5</mybatis.version>
         <logback.version>1.2.3</logback.version>
+        <junit.version>4.12</junit.version>
         <lombok.version>1.16.20</lombok.version>
     </properties>
 
@@ -59,6 +60,12 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>${logback.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
