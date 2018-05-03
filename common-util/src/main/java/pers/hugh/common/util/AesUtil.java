@@ -2,6 +2,8 @@ package pers.hugh.common.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -12,15 +14,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
 /**
- * AES加密，密文转码为十六进制
+ * AES加密，支持密文编码模式为：16进制，Base64
  *
  * @author xzding
  * @version 1.0
  * @since <pre>2018/1/8</pre>
  */
-public class AesHexUtil {
+public class AesUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(AesHexUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(AesUtil.class);
 
     private static final String KEY_ALGORITHM = "AES";
     /**
@@ -28,14 +30,29 @@ public class AesHexUtil {
      */
     private static final String DEFAULT_CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
 
+    private static final BASE64Encoder BASE_64_ENCODER = new BASE64Encoder();
+    private static final BASE64Decoder BASE_64_DECODER = new BASE64Decoder();
+
+    private enum Mode {
+        /**
+         * Base64模式
+         */
+        BASE64,
+        /**
+         * 16进制模式
+         */
+        HEX,;
+    }
+
     /**
      * AES 加密操作
      *
-     * @param content  待加密内容
-     * @param password 加密密码
-     * @return 返回十六进制转码后的加密数据
+     * @param mode     加密数据转码模式
+     * @param content  明文
+     * @param password 密码
+     * @return mode模式转码后的加密数据
      */
-    public static String encrypt(String content, String password) {
+    private static String encrypt(Mode mode, String content, String password) {
         try {
             // 创建密码器
             Cipher cipher = Cipher.getInstance(DEFAULT_CIPHER_ALGORITHM);
@@ -48,8 +65,13 @@ public class AesHexUtil {
             // 加密
             byte[] result = cipher.doFinal(byteContent);
 
-            //十六进制转码返回
-            return parseByte2HexStr(result);
+            if (mode == Mode.HEX) {
+                //返回十六进制转码后的加密数据
+                return parseByte2HexStr(result);
+            } else {
+                //返回Base64转码后的加密数据
+                return BASE_64_ENCODER.encode(result);
+            }
         } catch (Exception e) {
             logger.error("encrypt exception", e);
             return null;
@@ -59,11 +81,12 @@ public class AesHexUtil {
     /**
      * AES 解密操作
      *
-     * @param content
-     * @param password
-     * @return
+     * @param mode     content的转码模式
+     * @param content  mode模式的密文
+     * @param password 密码
+     * @return 明文
      */
-    public static String decrypt(String content, String password) {
+    private static String decrypt(Mode mode, String content, String password) {
 
         try {
             //实例化
@@ -72,10 +95,18 @@ public class AesHexUtil {
             //使用密钥初始化，设置为解密模式
             cipher.init(Cipher.DECRYPT_MODE, getSecretKey(password));
 
+            byte[] byteContent;
+            if (mode == Mode.HEX) {
+                //十六进制转byte[]
+                byteContent = parseHexStr2Byte(content);
+            } else {
+                //Base64转byte[]
+                byteContent = BASE_64_DECODER.decodeBuffer(content);
+            }
             //执行操作
-            byte[] result = cipher.doFinal(parseHexStr2Byte(content));
+            byte[] result = cipher.doFinal(byteContent);
 
-            return new String(result, "utf-8");
+            return new String(result, StandardCharsets.UTF_8);
         } catch (Exception e) {
             logger.error("decrypt exception", e);
             return null;
@@ -112,7 +143,7 @@ public class AesHexUtil {
      * @param buf
      * @return
      */
-    public static String parseByte2HexStr(byte buf[]) {
+    private static String parseByte2HexStr(byte buf[]) {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < buf.length; i++) {
             String hex = Integer.toHexString(buf[i] & 0xFF);
@@ -130,7 +161,7 @@ public class AesHexUtil {
      * @param hexStr
      * @return
      */
-    public static byte[] parseHexStr2Byte(String hexStr) {
+    private static byte[] parseHexStr2Byte(String hexStr) {
         if (hexStr.length() < 1) {
             return null;
         }
@@ -143,12 +174,36 @@ public class AesHexUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        String plaintext = "abcdefghijklmn";
-        System.out.println("明文:" + plaintext);
-        String ciphertext = AesHexUtil.encrypt(plaintext, "123456");
-        System.out.println("密文:" + ciphertext);
-        System.out.println("明文:" + AesHexUtil.decrypt(ciphertext, "123456"));
+    public static String encrypt2HexStr(String content, String password) {
+        return encrypt(Mode.HEX, content, password);
     }
 
+    public static String decryptFromHexStr(String content, String password) {
+        return decrypt(Mode.HEX, content, password);
+    }
+
+    public static String encrypt2Base64Str(String content, String password) {
+        return encrypt(Mode.BASE64, content, password);
+    }
+
+    public static String decryptFromBase64Str(String content, String password) {
+        return decrypt(Mode.BASE64, content, password);
+    }
+
+
+    public static void main(String[] args) {
+        System.out.println("=======================Hex加解密============================");
+        String plaintext1 = "abcdefghijklmn";
+        System.out.println("明文:" + plaintext1);
+        String ciphertext1 = encrypt2HexStr(plaintext1, "123456");
+        System.out.println("密文:" + ciphertext1);
+        System.out.println("明文:" + AesUtil.decryptFromHexStr(ciphertext1, "123456"));
+
+        System.out.println("=======================Base64加解密=========================");
+        String plaintext2 = "abcdefghijklmn123123";
+        System.out.println("明文:" + plaintext2);
+        String ciphertext2 = encrypt2Base64Str(plaintext2, "123456");
+        System.out.println("密文:" + ciphertext2);
+        System.out.println("明文:" + decryptFromBase64Str(ciphertext2, "123456"));
+    }
 }
