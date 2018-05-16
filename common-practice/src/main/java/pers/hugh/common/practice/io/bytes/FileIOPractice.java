@@ -1,4 +1,4 @@
-package pers.hugh.common.practice.io;
+package pers.hugh.common.practice.io.bytes;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
  * @author xzding
  * @date 2018/5/3
  */
-public class ByteIOPractice {
+public class FileIOPractice {
 
     private static final String content = "我是谁？我在那？";
 

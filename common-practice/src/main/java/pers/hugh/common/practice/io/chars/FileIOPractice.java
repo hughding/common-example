@@ -1,4 +1,4 @@
-package pers.hugh.common.practice.io;
+package pers.hugh.common.practice.io.chars;
 
 import java.io.*;
 
@@ -6,7 +6,7 @@ import java.io.*;
  * @author xzding
  * @date 2018/5/3
  */
-public class CharIOPractice {
+public class FileIOPractice {
     private static final String content = "我是谁？我在那？";
 
     private static final String FILE_PATH = "common-practice/target/filedemo.txt";
