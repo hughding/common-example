@@ -55,10 +55,4 @@ public class PinyinUtil {
         }
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        System.out.println(getPinyin("汉语与汉字,abc,123"));
-        System.out.println(getPinyinHeadChar("汉语与汉字,abc,123"));
-    }
-
 }

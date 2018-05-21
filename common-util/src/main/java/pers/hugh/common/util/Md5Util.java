@@ -60,8 +60,4 @@ public class Md5Util {
         }
         return hexStr.toString().toUpperCase();
     }
-
-    public static void main(String[] args) {
-        System.out.println(getMd5("abc"));
-    }
 }
