@@ -20,7 +20,7 @@ public class FileIOPractice {
         InputStream inputStream = new FileInputStream(FILE_PATH);
         Reader reader = new InputStreamReader(inputStream);
         char[] buffer = new char[12];
-        int readLength = 0;
+        int readLength;
         while ((readLength = reader.read(buffer)) != -1) {
             System.out.print(String.valueOf(buffer, 0, readLength));
         }

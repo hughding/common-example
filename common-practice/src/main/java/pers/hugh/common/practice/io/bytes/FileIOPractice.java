@@ -9,13 +9,13 @@ import java.nio.charset.Charset;
  */
 public class FileIOPractice {
 
-    private static final String content = "我是谁？我在那？";
+    private static final String CONTENT = "我是谁？我在那？";
 
     private static final String FILE_PATH = "common-practice/target/filedemo.txt";
 
     public static void main(String[] args) throws IOException {
         OutputStream outputStream = new FileOutputStream(FILE_PATH);
-        outputStream.write(content.getBytes(Charset.forName("UTF-8")));
+        outputStream.write(CONTENT.getBytes(Charset.forName("UTF-8")));
         outputStream.close();
 
 
@@ -29,7 +29,7 @@ public class FileIOPractice {
 
         //汉字占用2-4个字节，所以取最小公倍数为缓冲池大小
         byte[] buffer = new byte[12];
-        int readLength = 0;
+        int readLength;
         while ((readLength = inputStream.read(buffer)) != -1) {
             System.out.print(new String(buffer, 0, readLength, Charset.forName("UTF-8")));
         }
