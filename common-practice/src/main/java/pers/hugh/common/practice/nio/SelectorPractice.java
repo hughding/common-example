@@ -3,7 +3,6 @@ package pers.hugh.common.practice.nio;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.nio.BufferUnderflowException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
@@ -30,8 +29,7 @@ public class SelectorPractice {
             //设置为非阻塞
             ssc.configureBlocking(false);
             //监听端口
-            InetSocketAddress address = new InetSocketAddress(port);
-            ssc.socket().bind(address);
+            ssc.socket().bind(new InetSocketAddress(port));
             //OP_ACCEPT是新建立连接的事件
             SelectionKey key = ssc.register(selector, SelectionKey.OP_ACCEPT);
             System.out.println("listen on " + port);
