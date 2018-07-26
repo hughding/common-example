@@ -46,6 +46,27 @@ public class HttpUtil {
      * HTTP GET方法
      *
      * @param url
+     * @return
+     */
+    public static String doGet(String url) {
+        return doGet(url, null, null);
+    }
+
+    /**
+     * HTTP GET方法
+     *
+     * @param url
+     * @param proxy 若不使用代理，传null
+     * @return
+     */
+    public static String doGet(String url, HttpProxy proxy) {
+        return doGet(url, proxy, null);
+    }
+
+    /**
+     * HTTP GET方法
+     *
+     * @param url
      * @param proxy       若不使用代理，传null
      * @param cookieStore 若不使用CookieStore，传null
      * @return
@@ -73,6 +94,29 @@ public class HttpUtil {
             logger.error("doGet error", e);
         }
         return result;
+    }
+
+    /**
+     * HTTP POST方法
+     *
+     * @param url
+     * @param jsonStr 请求JSON字符串
+     * @return
+     */
+    public static String doPost(String url, String jsonStr) {
+        return doPost(url, jsonStr, null, null);
+    }
+
+    /**
+     * HTTP POST方法
+     *
+     * @param url
+     * @param jsonStr 请求JSON字符串
+     * @param proxy   若不使用代理，传null
+     * @return
+     */
+    public static String doPost(String url, String jsonStr, HttpProxy proxy) {
+        return doPost(url, jsonStr, proxy, null);
     }
 
     /**
@@ -109,6 +153,29 @@ public class HttpUtil {
             logger.error("doPost error", e);
         }
         return result;
+    }
+
+    /**
+     * HTTP POST方法
+     *
+     * @param url
+     * @param parameters FORM表单参数
+     * @return
+     */
+    public static String doPost(String url, List<BasicNameValuePair> parameters) {
+        return doPost(url, parameters, null, null);
+    }
+
+    /**
+     * HTTP POST方法
+     *
+     * @param url
+     * @param parameters FORM表单参数
+     * @param proxy      若不使用代理，传null
+     * @return
+     */
+    public static String doPost(String url, List<BasicNameValuePair> parameters, HttpProxy proxy) {
+        return doPost(url, parameters, proxy, null);
     }
 
     /**
