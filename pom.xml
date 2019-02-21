@@ -15,6 +15,7 @@
         <module>dozer-demo</module>
         <module>storm-demo</module>
         <module>common-practice</module>
+        <module>websocket-demo</module>
     </modules>
 
     <properties>
