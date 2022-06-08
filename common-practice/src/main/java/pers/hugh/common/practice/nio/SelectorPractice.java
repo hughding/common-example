@@ -22,6 +22,9 @@ public class SelectorPractice {
 
     private static final ByteBuffer BYTE_BUFFER = ByteBuffer.allocate(1024);
 
+    //直接内存
+    private static final ByteBuffer BYTE_DIRECT_BUFFER = ByteBuffer.allocateDirect(1024);
+
     public static void main(String[] args) throws IOException {
         //==========1.创建Selector==========4.使用完后关闭Selector==========
         try (Selector selector = Selector.open()) {
